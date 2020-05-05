@@ -42,7 +42,7 @@ app.get('/', (req, res) => {
 app.get(
 	'/login',
 	passport.authenticate('spotify', {
-		scope: [ 'user-read-email', 'user-read-private' ],
+		scope: [ 'user-read-email', 'user-read-private', 'user-top-read' ],
 		showDialog: true
 	})
 );
@@ -52,12 +52,7 @@ app.get('/login_again', (req, res) => {
 });
 
 app.get('/callback', passport.authenticate('spotify', { failureRedirect: '/login_again' }), (req, res, next) => {
-	res.redirect(
-		'http://localhost:3000/#' +
-			querystring.stringify({
-				token: req.user
-			})
-	);
+	res.redirect('http://localhost:3000/#' + JSON.stringify(req.user));
 	console.log('authentication successful');
 });
 

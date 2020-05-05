@@ -22,14 +22,18 @@ module.exports = (passport) => {
 						newUser.save();
 					}
 				});
-
+				const returnVal = {
+					accessToken: accessToken,
+					refreshToken: refreshToken,
+					expires_in: expires_in
+				};
 				// asynchronous verification, for effect...
 				process.nextTick(function() {
 					// To keep the example simple, the user's spotify profile is returned to
 					// represent the logged-in user. In a typical application, you would want
 					// to associate the spotify account with a user record in your database,
 					// and return that user instead.
-					return done(null, accessToken);
+					return done(null, returnVal);
 				});
 			}
 		)
