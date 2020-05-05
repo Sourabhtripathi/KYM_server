@@ -17,7 +17,7 @@ module.exports = (passport) => {
 				User.findOne({ spotifyId: profile.id }).then((user) => {
 					if (!user) {
 						const newUser = new User({
-							id: profile.id
+							spotifyId: profile.id
 						});
 						newUser.save();
 					}
