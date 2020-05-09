@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const usersSchema = new mongoose.Schema({
 	spotifyId: String,
-	topTracks: [ String ]
+	topTracks: [ Object ]
 	// friends: [
 	// 	{
 	// 		type: mongoose.Schema.Types.ObjectId,

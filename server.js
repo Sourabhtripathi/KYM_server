@@ -4,7 +4,6 @@ const passport = require('passport');
 const app = express();
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-const methodOverride = require('method-override');
 const User = require('./models/user');
 const cors = require('cors');
 const request = require('request');
@@ -16,7 +15,7 @@ mongoose.connect(url, { useNewUrlParser: true });
 app.use(cors());
 app.use(
 	bodyParser.urlencoded({
-		extended: false
+		extended: true
 	})
 );
 app.use(bodyParser.json());
@@ -78,10 +77,25 @@ app.get('/refresh_token', (req, res) => {
 					accessToken: access_token
 				})
 		);
-		// res.send({
-		// 	access_token: access_token
-		// });
 	});
+});
+
+app.put('/setTopTracks', (req, res) => {
+	console.log(req.body);
+	User.findOneAndUpdate(
+		req.params.spotifyId,
+		{
+			topTracks: req.body.topTracks
+		},
+		(err, updatedUser) => {
+			if (err) {
+				console.log(err);
+			} else {
+				console.log(updatedUser);
+				res.send(updatedUser);
+			}
+		}
+	);
 });
 
 const port = process.env.PORT || 3005;
