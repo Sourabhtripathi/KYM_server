@@ -5,6 +5,7 @@ const app = express();
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const User = require('./models/user');
+const OpenPlaylist = require('./models/openPlaylist');
 const cors = require('cors');
 const request = require('request');
 const querystring = require('query-string');
@@ -38,7 +39,6 @@ app.get('/', (req, res) => {
 	res.send(data);
 });
 
-const redirect_uri = 'http://localhost:3005/callback';
 const client_id = process.env.SPOTIFY_CLIENT_ID;
 const client_secret = process.env.SPOTIFY_CLIENT_SECRET;
 
@@ -96,6 +96,34 @@ app.put('/setTopTracks', (req, res) => {
 			}
 		}
 	);
+});
+
+// OpenPlaylists routes
+
+// Create
+app.post('/add_open_playlist', (req, res) => {
+	// console.log(req);
+	OpenPlaylist.create(req.body, (err, openPlaylist) => {
+		if (err) {
+			console.log(err);
+		} else {
+			console.log(openPlaylist);
+			res.send(openPlaylist);
+		}
+	});
+});
+
+// Read
+app.get('/open_playlists', (req, res) => {
+	// console.log(req);
+	OpenPlaylist.find({}, (err, openPlaylists) => {
+		if (err) {
+			console.log(err);
+		} else {
+			console.log(openPlaylists);
+			res.send(openPlaylists);
+		}
+	});
 });
 
 const port = process.env.PORT || 3005;
