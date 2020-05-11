@@ -126,6 +126,18 @@ app.get('/open_playlists', (req, res) => {
 	});
 });
 
+// Delete
+app.delete('/remove_open_playlist/:pid', (req, res) => {
+	// console.log(req);
+	OpenPlaylist.findOneAndRemove({ playlistId: req.params.pid }, (err) => {
+		if (err) {
+			console.log(err);
+		} else {
+			res.send('removed : ' + req.params.pid);
+		}
+	});
+});
+
 const port = process.env.PORT || 3005;
 app.listen(port, () => {
 	console.log('Server up and running on port 3005!');
