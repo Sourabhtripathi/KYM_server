@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const openPlaylistsSchema = new mongoose.Schema({
 	userId: String,
 	playlistId: String,
+	playlistName: String,
 	rating: Number
 	// friends: [
 	// 	{

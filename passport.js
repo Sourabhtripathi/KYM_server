@@ -2,8 +2,7 @@ const SpotifyStrategy = require('passport-spotify').Strategy;
 const redirect_uri = 'http://localhost:3005/callback';
 const client_id = process.env.SPOTIFY_CLIENT_ID;
 const client_secret = process.env.SPOTIFY_CLIENT_SECRET;
-const jwt = require('jsonwebtoken');
-const User = require('./models/user').default;
+const User = require('./models/user');
 
 module.exports = (passport) => {
 	passport.use(
