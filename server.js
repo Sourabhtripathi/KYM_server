@@ -91,7 +91,6 @@ app.put('/setTopTracks', (req, res) => {
 			if (err) {
 				console.log(err);
 			} else {
-				console.log(updatedUser);
 				res.send(updatedUser);
 			}
 		}
@@ -107,28 +106,59 @@ app.post('/add_open_playlist', (req, res) => {
 		if (err) {
 			console.log(err);
 		} else {
-			console.log(openPlaylist);
 			res.send(openPlaylist);
 		}
 	});
 });
 
-// Read
+// Read All
+
 app.get('/open_playlists', (req, res) => {
 	// console.log(req);
 	OpenPlaylist.find({}, (err, openPlaylists) => {
 		if (err) {
 			console.log(err);
 		} else {
-			console.log(openPlaylists);
 			res.send(openPlaylists);
 		}
 	});
 });
 
+// Read One
+app.get('/open_playlist/:pid', (req, res) => {
+	// console.log(req);
+	OpenPlaylist.find({ playlistId: req.params.pid }, (err, openPlaylists) => {
+		if (err) {
+			console.log(err);
+			res.send({});
+		} else {
+			res.send(openPlaylists);
+		}
+	});
+});
+
+// Update
+// add rating
+app.put('/open_playlist/rate/:pid', (req, res) => {
+	let { userId, rating } = req.body;
+	rating = parseInt(rating);
+	OpenPlaylist.findOne({ playlistId: req.params.pid }, (err, foundPlaylist) => {
+		const total = foundPlaylist.totalRating;
+		const overall = foundPlaylist.overallRating;
+		console.log(typeof overall);
+		console.log(typeof total);
+		console.log(typeof rating);
+		foundPlaylist.ratedBy.push(userId);
+		foundPlaylist.overallRating = (overall * total + rating) / (total + 1);
+		foundPlaylist.totalRating += rating;
+		foundPlaylist.save().then((data) => {
+			res.send(data);
+		});
+	});
+});
+
 // Delete
 app.delete('/remove_open_playlist/:pid', (req, res) => {
-	// console.log(req);
 	OpenPlaylist.findOneAndRemove({ playlistId: req.params.pid }, (err) => {
 		if (err) {
 			console.log(err);
