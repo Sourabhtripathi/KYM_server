@@ -41,11 +41,32 @@ app.get('/', (req, res) => {
 
 const client_id = process.env.SPOTIFY_CLIENT_ID;
 const client_secret = process.env.SPOTIFY_CLIENT_SECRET;
+const scope = [
+	'ugc-image-upload',
+	'user-read-playback-state',
+	'user-modify-playback-state',
+	'user-read-currently-playing',
+	'streaming',
+	'app-remote-control',
+	'user-read-email',
+	'user-read-private',
+	'playlist-read-collaborative',
+	'playlist-modify-public',
+	'playlist-read-private',
+	'playlist-modify-private',
+	'user-library-modify',
+	'user-library-read',
+	'user-top-read',
+	'user-read-playback-position',
+	'user-read-recently-played',
+	'user-follow-read',
+	'user-follow-modify'
+];
 
 app.get(
 	'/login',
 	passport.authenticate('spotify', {
-		scope: [ 'user-read-email', 'user-read-private', 'user-top-read' ],
+		scope: scope,
 		showDialog: true
 	})
 );
@@ -145,9 +166,6 @@ app.put('/open_playlist/rate/:pid', (req, res) => {
 	OpenPlaylist.findOne({ playlistId: req.params.pid }, (err, foundPlaylist) => {
 		const total = foundPlaylist.totalRating;
 		const overall = foundPlaylist.overallRating;
-		console.log(typeof overall);
-		console.log(typeof total);
-		console.log(typeof rating);
 		foundPlaylist.ratedBy.push(userId);
 		foundPlaylist.overallRating = (overall * total + rating) / (total + 1);
 		foundPlaylist.totalRating += rating;

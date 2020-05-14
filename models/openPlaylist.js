@@ -6,7 +6,8 @@ const openPlaylistsSchema = new mongoose.Schema({
 	playlistName: String,
 	ratedBy: [ String ],
 	totalRating: Number,
-	overallRating: Number
+	overallRating: Number,
+	genres: [ String ]
 	// friends: [
 	// 	{
 	// 		type: mongoose.Schema.Types.ObjectId,
