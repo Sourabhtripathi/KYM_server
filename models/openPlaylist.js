@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 
 const openPlaylistsSchema = new mongoose.Schema({
 	userId: String,
+	userName: String,
 	playlistId: String,
 	playlistName: String,
 	ratedBy: [ String ],

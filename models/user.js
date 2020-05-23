@@ -2,13 +2,9 @@ const mongoose = require('mongoose');
 
 const usersSchema = new mongoose.Schema({
 	spotifyId: String,
-	topTracks: [ Object ]
-	// friends: [
-	// 	{
-	// 		type: mongoose.Schema.Types.ObjectId,
-	// 		ref: 'User'
-	// 	}
-	// ]
+	topTracks: [ Object ],
+	name: String,
+	images: [ String ]
 });
 
 module.exports = mongoose.model('User', usersSchema);
