@@ -7,7 +7,14 @@ const openPlaylistsSchema = new mongoose.Schema({
 	ratedBy: [ String ],
 	totalRating: Number,
 	overallRating: Number,
-	genres: [ String ]
+	images: [
+		{
+			height: Number,
+			url: String,
+			width: Number
+		}
+	]
+	// genres: [ String ]
 	// friends: [
 	// 	{
 	// 		type: mongoose.Schema.Types.ObjectId,

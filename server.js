@@ -73,7 +73,6 @@ app.get(
 
 app.get('/callback', passport.authenticate('spotify', { failureRedirect: '/login_again' }), (req, res, next) => {
 	res.redirect('http://localhost:3000/#' + JSON.stringify(req.user));
-	console.log('authentication successful');
 });
 
 app.get('/refresh_token', (req, res) => {
@@ -102,7 +101,6 @@ app.get('/refresh_token', (req, res) => {
 });
 
 app.put('/setTopTracks', (req, res) => {
-	console.log(req.body);
 	User.findOneAndUpdate(
 		req.params.spotifyId,
 		{
