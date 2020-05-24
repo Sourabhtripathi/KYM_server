@@ -1,6 +1,10 @@
 const mongoose = require('mongoose');
 
 const openPlaylistsSchema = new mongoose.Schema({
+	uId: {
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'User'
+	},
 	userId: String,
 	userName: String,
 	playlistId: String,
@@ -17,10 +21,10 @@ const openPlaylistsSchema = new mongoose.Schema({
 	]
 	// genres: [ String ]
 	// friends: [
-	// 	{
-	// 		type: mongoose.Schema.Types.ObjectId,
-	// 		ref: 'User'
-	// 	}
+	// {
+	// 	type: mongoose.Schema.Types.ObjectId,
+	// 	ref: 'User'
+	// }
 	// ]
 });
 

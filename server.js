@@ -116,18 +116,77 @@ app.put('/setTopTracks', (req, res) => {
 	);
 });
 
+// Read All Users
+
+app.get('/users', (req, res) => {
+	// console.log(req);
+	User.find({}, (err, users) => {
+		if (err) {
+			console.log(err);
+		} else {
+			res.send(users);
+		}
+	});
+});
+
 // OpenPlaylists routes
 
 // Create
 app.post('/add_open_playlist', (req, res) => {
 	// console.log(req);
-	OpenPlaylist.create(req.body, (err, openPlaylist) => {
-		if (err) {
-			console.log(err);
-		} else {
-			res.send(openPlaylist);
-		}
+	const { userId, userName, playlistId, playlistName, overallRating, totalRating, ratedBy, images } = req.body;
+
+	User.findOne({ spotifyId: req.body.userId }, (err, foundUser) => {
+		console.log(foundUser);
+		const newOpenPlaylist = new OpenPlaylist({
+			userId,
+			userName,
+			playlistId,
+			playlistName,
+			overallRating,
+			totalRating,
+			ratedBy,
+			images,
+			uId: foundUser
+		});
+		newOpenPlaylist.save((err, savedPlaylist) => {
+			if (err) {
+				console.log(err);
+			} else {
+				foundUser.openPlaylists.push(savedPlaylist);
+				foundUser.save((err, data) => {
+					if (err) {
+						console.log(err);
+					} else {
+						console.log(data);
+					}
+				});
+				res.send(savedPlaylist);
+			}
+		});
 	});
+
+	// OpenPlaylist.create(req.body, (err, openPlaylist) => {
+	// 	if (err) {
+	// 		console.log(err);
+	// 	} else {
+	// 		User.find({ spotifyId: req.body.userId }, (err, foundUser) => {
+	// 			if (err) {
+	// 				console.log(err);
+	// 			} else {
+	// 				console.log(foundUser);
+	// 				foundUser.openPlaylists.push(openPlaylist);
+	// 				foundUser.save((err, data) => {
+	// 					if (err) {
+	// 						console.log(err);
+	// 					} else {
+	// 						console.log(data);
+	// 					}
+	// 				});
+	// 			}
+	// 		});
+	// 	}
+	// });
 });
 
 // Read All

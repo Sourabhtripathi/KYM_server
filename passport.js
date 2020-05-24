@@ -13,7 +13,6 @@ module.exports = (passport) => {
 				callbackURL: redirect_uri
 			},
 			(accessToken, refreshToken, expires_in, profile, done) => {
-				console.log(profile);
 				User.findOne({ spotifyId: profile.id }).then((user) => {
 					if (!user) {
 						const newUser = new User({
