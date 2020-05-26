@@ -4,8 +4,8 @@ const passport = require('passport');
 const { scope } = require('../variables');
 const client_id = process.env.SPOTIFY_CLIENT_ID;
 const client_secret = process.env.SPOTIFY_CLIENT_SECRET;
-const client_url = process.env.CLIENT_URL || 'http://localhost:3000';
-// const client_url = 'http://localhost:3000';
+// const client_url = process.env.CLIENT_URL || 'http://localhost:3000';
+const client_url = 'http://localhost:3000';
 const request = require('request');
 
 require('../passport')(passport);
