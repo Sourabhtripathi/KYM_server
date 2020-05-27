@@ -5,7 +5,6 @@ const { scope } = require('../variables');
 const client_id = process.env.SPOTIFY_CLIENT_ID;
 const client_secret = process.env.SPOTIFY_CLIENT_SECRET;
 const client_url = process.env.CLIENT_URL;
-// const client_url = 'http://localhost:3000';
 const request = require('request');
 
 require('../passport')(passport);
@@ -19,7 +18,8 @@ router.get(
 );
 
 router.get('/callback', passport.authenticate('spotify', { failureRedirect: '/login_again' }), (req, res, next) => {
-	res.redirect(client_url + '/#' + JSON.stringify(req.user));
+	// res.redirect(client_url + '/#' + JSON.stringify(req.user));
+	res.send(JSON.stringify(req.user));
 });
 
 router.get('/refresh_token', (req, res) => {

@@ -8,7 +8,6 @@ const passport = require('passport');
 require('dotenv').config();
 
 // DB Config
-// let url = 'mongodb://localhost/updated_kym';
 let url = process.env.DATABASEURL;
 
 mongoose.connect(url, { useNewUrlParser: true });

@@ -1,6 +1,5 @@
 const SpotifyStrategy = require('passport-spotify').Strategy;
 const redirect_uri = `${process.env.SERVER_URL}/callback`;
-// const redirect_uri = `http://localhost:3005/callback`;
 const client_id = process.env.SPOTIFY_CLIENT_ID;
 const client_secret = process.env.SPOTIFY_CLIENT_SECRET;
 const User = require('./models/user');
