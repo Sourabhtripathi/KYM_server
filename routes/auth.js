@@ -18,8 +18,7 @@ router.get(
 );
 
 router.get('/callback', passport.authenticate('spotify', { failureRedirect: '/login_again' }), (req, res, next) => {
-	// res.redirect(client_url + '/#' + JSON.stringify(req.user));
-	res.send(JSON.stringify(req.user));
+	res.redirect(client_url + '/#' + JSON.stringify(req.user));
 });
 
 router.get('/refresh_token', (req, res) => {
