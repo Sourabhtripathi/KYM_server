@@ -7,7 +7,7 @@ const client_secret = process.env.SPOTIFY_CLIENT_SECRET;
 const client_url = process.env.CLIENT_URL;
 const request = require('request');
 const spotifyRequest = require('../spotifyRequest');
-const CLIENT_CALLBACK_URL = `${process.env.CLIENT_URL}/${callback}`;
+const CLIENT_CALLBACK_URL = `${process.env.CLIENT_URL}/callback`;
 const CryptoJS = require('crypto-js');
 
 require('../passport')(passport);
