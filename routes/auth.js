@@ -18,7 +18,8 @@ router.get(
 );
 
 router.get('/callback', passport.authenticate('spotify', { failureRedirect: '/login_again' }), (req, res, next) => {
-	res.redirect(client_url + '/#' + JSON.stringify(req.user));
+	// res.redirect(client_url + '/#' + JSON.stringify(req.user));
+	res.send(JSON.stringify(req.user));
 });
 
 router.get('/refresh_token', (req, res) => {
@@ -37,12 +38,17 @@ router.get('/refresh_token', (req, res) => {
 	request.post(authOptions, function(error, response, body) {
 		var access_token = body.access_token;
 
-		res.redirect(
-			client_url +
-				'/#' +
-				JSON.stringify({
-					accessToken: access_token
-				})
+		// res.redirect(
+		// 	client_url +
+		// 		'/#' +
+		// 		JSON.stringify({
+		// 			accessToken: access_token
+		// 		})
+		// );
+		res.send(
+			JSON.stringify({
+				accessToken: access_token
+			})
 		);
 	});
 });
