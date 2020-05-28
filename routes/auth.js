@@ -6,8 +6,11 @@ const client_id = process.env.SPOTIFY_CLIENT_ID;
 const client_secret = process.env.SPOTIFY_CLIENT_SECRET;
 const client_url = process.env.CLIENT_URL;
 const request = require('request');
-
+// const spotifyRequest = require('../spotifyRequest');
+// const CLIENT_CALLBACK_URL = `process.env.CLIENT_URL/${callback}`;
 require('../passport')(passport);
+
+// web
 
 router.get(
 	'/login',
@@ -18,8 +21,8 @@ router.get(
 );
 
 router.get('/callback', passport.authenticate('spotify', { failureRedirect: '/login_again' }), (req, res, next) => {
-	// res.redirect(client_url + '/#' + JSON.stringify(req.user));
-	res.send(JSON.stringify(req.user));
+	res.redirect(client_url + '/#' + JSON.stringify(req.user));
+	// res.send(JSON.stringify(req.user));
 });
 
 router.get('/refresh_token', (req, res) => {
@@ -38,19 +41,71 @@ router.get('/refresh_token', (req, res) => {
 	request.post(authOptions, function(error, response, body) {
 		var access_token = body.access_token;
 
-		// res.redirect(
-		// 	client_url +
-		// 		'/#' +
-		// 		JSON.stringify({
-		// 			accessToken: access_token
-		// 		})
-		// );
-		res.send(
-			JSON.stringify({
-				accessToken: access_token
-			})
+		res.redirect(
+			client_url +
+				'/#' +
+				JSON.stringify({
+					accessToken: access_token
+				})
 		);
+		// res.send(
+		// 	JSON.stringify({
+		// 		accessToken: access_token
+		// 	})
+		// );
 	});
 });
+
+// android
+// Route to obtain a new Token
+// router.post('/login', (req, res) => {
+// 	const params = req.body;
+// 	if (!params.code) {
+// 		return res.json({
+// 			error: 'Parameter missing'
+// 		});
+// 	}
+
+// 	spotifyRequest({
+// 		grant_type: 'authorization_code',
+// 		redirect_uri: CLIENT_CALLBACK_URL,
+// 		code: params.code
+// 	})
+// 		.then((session) => {
+// 			let result = {
+// 				access_token: session.access_token,
+// 				expires_in: session.expires_in,
+// 				refresh_token: encrypt(session.refresh_token)
+// 			};
+// 			return res.send(result);
+// 		})
+// 		.catch((response) => {
+// 			return res.json(response);
+// 		});
+// });
+
+// // Get a new access token from a refresh token
+// router.post('/refresh', (req, res) => {
+// 	const params = req.body;
+// 	if (!params.refresh_token) {
+// 		return res.json({
+// 			error: 'Parameter missing'
+// 		});
+// 	}
+
+// 	spotifyRequest({
+// 		grant_type: 'refresh_token',
+// 		refresh_token: decrypt(params.refresh_token)
+// 	})
+// 		.then((session) => {
+// 			return res.send({
+// 				access_token: session.access_token,
+// 				expires_in: session.expires_in
+// 			});
+// 		})
+// 		.catch((response) => {
+// 			return res.json(response);
+// 		});
+// });
 
 module.exports = router;
