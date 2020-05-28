@@ -12,7 +12,7 @@ module.exports = (passport) => {
 				clientSecret: client_secret,
 				callbackURL: redirect_uri
 			},
-			(accessToken, refreshToken, expires_in, profile, done) => {
+			(access_token, refresh_token, expires_in, profile, done) => {
 				console.log(profile._json.images);
 				User.findOne({ spotifyId: profile.id }).then((user) => {
 					if (!user) {
@@ -25,8 +25,8 @@ module.exports = (passport) => {
 					}
 				});
 				const returnVal = {
-					accessToken: accessToken,
-					refreshToken: refreshToken,
+					access_token: access_token,
+					refresh_token: refresh_token,
 					expires_in: expires_in
 				};
 				// asynchronous verification, for effect...
