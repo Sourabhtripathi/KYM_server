@@ -47,8 +47,7 @@ router.get('/refresh_token', (req, res) => {
 			client_url +
 				'/#' +
 				JSON.stringify({
-					access_token: access_token,
-					refresh_token: refresh_token
+					access_token: access_token
 				})
 		);
 		// res.send(
