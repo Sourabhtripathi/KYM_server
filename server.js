@@ -10,7 +10,7 @@ require('dotenv').config();
 // DB Config
 let url = process.env.DATABASEURL;
 
-mongoose.connect(url, { useNewUrlParser: true });
+mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true });
 
 // Passport config
 passport.serializeUser(function(user, done) {

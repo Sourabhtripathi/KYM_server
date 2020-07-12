@@ -24,11 +24,13 @@ router.get(
 
 router.get('/callback', passport.authenticate('spotify', { failureRedirect: '/login_again' }), (req, res, next) => {
 	res.redirect(client_url + '/#' + JSON.stringify(req.user));
+	// console.log(req.user);
 	// res.send(JSON.stringify(req.user));
 });
 
 router.get('/refresh_token', (req, res) => {
 	// requesting access token from refresh token
+	console.log('refreshing');
 	var refresh_token = req.query.refresh_token;
 	var authOptions = {
 		url: 'https://accounts.spotify.com/api/token',
@@ -42,19 +44,19 @@ router.get('/refresh_token', (req, res) => {
 
 	request.post(authOptions, function(error, response, body) {
 		var access_token = body.access_token;
-
-		res.redirect(
-			client_url +
-				'/#' +
-				JSON.stringify({
-					access_token: access_token
-				})
-		);
-		// res.send(
-		// 	JSON.stringify({
-		// 		access_token: access_token
-		// 	})
+		console.log(body);
+		// res.redirect(
+		// 	client_url +
+		// 		'/#' +
+		// 		JSON.stringify({
+		// 			access_token: access_token
+		// 		})
 		// );
+		res.send(
+			JSON.stringify({
+				access_token: access_token
+			})
+		);
 	});
 });
 
