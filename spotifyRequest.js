@@ -28,6 +28,7 @@ module.exports = (params) => {
 			return Promise.resolve(resp.body);
 		})
 		.catch((err) => {
+			console.log(err);
 			return Promise.reject({
 				statusCode: 500,
 				body: JSON.stringify({})

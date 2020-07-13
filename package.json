@@ -23,7 +23,6 @@
 		"mongoose": "^5.9.11",
 		"passport": "^0.4.1",
 		"passport-spotify": "^1.1.0",
-		"query-string": "^6.12.1",
 		"request": "^2.88.2"
 	}
 }
