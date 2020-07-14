@@ -22,6 +22,19 @@ router.get(
 	})
 );
 
+// router.get('/login', function(req, res) {
+// 	var scopes = 'user-read-private user-read-email';
+// 	res.redirect(
+// 		'https://accounts.spotify.com/authorize' +
+// 			'?response_type=code' +
+// 			'&client_id=' +
+// 			client_id +
+// 			(scopes ? '&scope=' + encodeURIComponent(scopes) : '') +
+// 			'&redirect_uri=' +
+// 			encodeURIComponent(`${process.env.SERVER_URL}/callback`)
+// 	);
+// });
+
 router.get('/callback', passport.authenticate('spotify', { failureRedirect: '/login_again' }), (req, res, next) => {
 	res.redirect(client_url + '/#' + JSON.stringify(req.user));
 	// console.log(req.user);
